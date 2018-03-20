@@ -29,6 +29,7 @@ namespace MoviePosterArena.Services
                     cmd.Parameters.AddWithValue("@Description", model.Description);
                     cmd.Parameters.AddWithValue("@Type", model.Type);
                     cmd.Parameters.AddWithValue("@Price", model.Price);
+                    cmd.Parameters.AddWithValue("@ImageUrl", model.ImageUrl);
                     cmd.Parameters.AddWithValue("@ModifiedBy", model.ModifiedBy);
 
                     conn.Open();
@@ -62,6 +63,7 @@ namespace MoviePosterArena.Services
                         model.Description = reader.GetString(index++);
                         model.Type = reader.GetString(index++);
                         model.Price = reader.GetDecimal(index++);
+                        model.ImageUrl = reader.GetString(index++);
                         model.CreatedDate = reader.GetDateTime(index++);
                         model.ModifiedDate = reader.GetDateTime(index++);
                         model.ModifiedBy = reader.GetString(index++);

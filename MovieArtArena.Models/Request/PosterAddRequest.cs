@@ -12,6 +12,8 @@ namespace MovieArtArena.Models.Request
         public string Type { get; set; }
         [Required]
         public decimal Price { get; set; }
+
+        public string ImageUrl { get; set; }
         [MaxLength(128)]
         public string ModifiedBy { get; set; }
 

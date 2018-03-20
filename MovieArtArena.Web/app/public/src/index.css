@@ -11,7 +11,7 @@ background-color: rgba(0, 0, 0, 0.966);
 
 .sptext{
   font-family: cursive;
-  color: rgb(230, 243, 241)
+  color: rgb(122, 252, 252);
 }
 
 .txtAll{
@@ -19,14 +19,14 @@ background-color: rgba(0, 0, 0, 0.966);
 }
 
 .brandstyle{
-  font-size: 37px;
+  font-size: 40px;
   font-weight: bold;
   font-family: 'Rammetto One', cursive;
 }
 
 .dia{
-  font-size: 35px;
-  color: rgb(58, 61, 61)
+  font-size: 37px;
+  color: rgb(15, 29, 29)
 }
 
 .footer {
@@ -37,4 +37,29 @@ background-color: rgba(0, 0, 0, 0.966);
   background-color: rgb(15, 12, 12);
   color: white;
   text-align: center;
+}
+
+.sizing {
+  width: auto;
+  margin-left: auto;
+margin-right: auto;
+max-width: initial;
+background-color: black;
+}
+
+.night{
+  background-color: black;
+}
+
+.thirdparty{
+color: white;
+}
+
+img {
+max-height: 500px;
+align-items: center;
+}
+
+.navstyle {
+ font-family: inherit;
 }
