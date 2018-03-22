@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3482a38e0037fbdc1c91"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bf8b121fe5d5e07a7848"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -716,7 +716,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "/app/dist/";
+/******/ 	__webpack_require__.p = "/app/public/dist/";
 /******/
 /******/ 	// __webpack_hash__
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
@@ -3784,7 +3784,7 @@ exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/li
 
 
 // module
-exports.push([module.i, "body {\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif;\n}\n\n.bstyle {\nborder-style: dotted;\nbackground-color: rgba(0, 0, 0, 0.966);\n}\n\n.sptext{\n  font-family: cursive;\n  color: rgb(122, 252, 252);\n}\n\n.txtAll{\n  text-align: center;\n}\n\n.brandstyle{\n  font-size: 40px;\n  font-weight: bold;\n  font-family: 'Rammetto One', cursive;\n}\n\n.dia{\n  font-size: 37px;\n  color: rgb(15, 29, 29)\n}\n\n.footer {\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  width: 100%;\n  background-color: rgb(15, 12, 12);\n  color: white;\n  text-align: center;\n}\n\n.sizing {\n  width: auto;\n  margin-left: auto;\nmargin-right: auto;\nmax-width: initial;\nbackground-color: black;\n}\n\n.night{\n  background-color: black;\n}\n\n.thirdparty{\ncolor: white;\n}\n\nimg {\nmax-height: 500px;\n-ms-flex-align: center;\n    align-items: center;\n}\n\n.navstyle {\n font-family: inherit;\n}\n", ""]);
+exports.push([module.i, "body {\n  margin: 0;\n  padding: 0;\n  font-family: sans-serif;\n}\n\n.bstyle {\nborder-style: dotted;\nbackground-color: rgba(0, 0, 0, 0.966);\n}\n\n.sptext{\n  font-family: cursive;\n  color: rgb(255, 255, 255);\n}\n\n.txtAll{\n  text-align: center;\n}\n\n.brandstyle{\n  font-size: 40px;\n  font-weight: bold;\n  font-family: 'Rammetto One', cursive;\n}\n\n.dia{\n  font-size: 37px;\n  color: rgb(15, 29, 29)\n}\n\n.footer {\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  width: 100%;\n  background-color: rgb(15, 12, 12);\n  color: rgb(129, 122, 122);\n  text-align: center;\n}\n\n.sizing {\n  width: auto;\n  margin-left: auto;\nmargin-right: auto;\nmax-width: initial;\nbackground-color: black;\n}\n\n.night{\n  background-color: black;\n}\n\n.thirdparty{\ncolor: white;\n}\n\nimg {\nmax-height: 500px;\n-ms-flex-align: center;\n    align-items: center;\n}\n\n.navstyle {\n font-family: inherit;\n}\n\n.movies{\n  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;\n  width: 400px;\n  height: 450px;\n  padding-right: 90px;\n\n}\n\n.movietitlefont{\n  font-family: 'Shadows Into Light', cursive;\n  font-size: 50px;\n  text-decoration: underline;\n}\n\n.more{\n  margin-bottom: 50px;\n}\n\n.title {\n  font-weight: 900;\n\n}\n\n.description {\n  font-style: italic;\n  color: dimgray;\n}\n\n.price {\n  font-style: italic;\n  color: dimgray;\n}\n\n.box {\n  margin-bottom: 78px;\n  margin-right: 10px;\n  margin-left: 100px;\n}\n\n.cart{\n  font-size: 30px;\n}\n\n.monster{\n  color: rgb(0, 0, 0);\n}", ""]);
 
 // exports
 
@@ -9521,6 +9521,223 @@ if (true) {
 var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+
+/***/ "./node_modules/query-string/index.js":
+/*!********************************************!*\
+  !*** ./node_modules/query-string/index.js ***!
+  \********************************************/
+/*! dynamic exports provided */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var strictUriEncode = __webpack_require__(/*! strict-uri-encode */ "./node_modules/strict-uri-encode/index.js");
+var objectAssign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
+
+function encoderForArrayFormat(opts) {
+	switch (opts.arrayFormat) {
+		case 'index':
+			return function (key, value, index) {
+				return value === null ? [
+					encode(key, opts),
+					'[',
+					index,
+					']'
+				].join('') : [
+					encode(key, opts),
+					'[',
+					encode(index, opts),
+					']=',
+					encode(value, opts)
+				].join('');
+			};
+
+		case 'bracket':
+			return function (key, value) {
+				return value === null ? encode(key, opts) : [
+					encode(key, opts),
+					'[]=',
+					encode(value, opts)
+				].join('');
+			};
+
+		default:
+			return function (key, value) {
+				return value === null ? encode(key, opts) : [
+					encode(key, opts),
+					'=',
+					encode(value, opts)
+				].join('');
+			};
+	}
+}
+
+function parserForArrayFormat(opts) {
+	var result;
+
+	switch (opts.arrayFormat) {
+		case 'index':
+			return function (key, value, accumulator) {
+				result = /\[(\d*)\]$/.exec(key);
+
+				key = key.replace(/\[\d*\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				}
+
+				if (accumulator[key] === undefined) {
+					accumulator[key] = {};
+				}
+
+				accumulator[key][result[1]] = value;
+			};
+
+		case 'bracket':
+			return function (key, value, accumulator) {
+				result = /(\[\])$/.exec(key);
+				key = key.replace(/\[\]$/, '');
+
+				if (!result) {
+					accumulator[key] = value;
+					return;
+				} else if (accumulator[key] === undefined) {
+					accumulator[key] = [value];
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+
+		default:
+			return function (key, value, accumulator) {
+				if (accumulator[key] === undefined) {
+					accumulator[key] = value;
+					return;
+				}
+
+				accumulator[key] = [].concat(accumulator[key], value);
+			};
+	}
+}
+
+function encode(value, opts) {
+	if (opts.encode) {
+		return opts.strict ? strictUriEncode(value) : encodeURIComponent(value);
+	}
+
+	return value;
+}
+
+function keysSorter(input) {
+	if (Array.isArray(input)) {
+		return input.sort();
+	} else if (typeof input === 'object') {
+		return keysSorter(Object.keys(input)).sort(function (a, b) {
+			return Number(a) - Number(b);
+		}).map(function (key) {
+			return input[key];
+		});
+	}
+
+	return input;
+}
+
+exports.extract = function (str) {
+	return str.split('?')[1] || '';
+};
+
+exports.parse = function (str, opts) {
+	opts = objectAssign({arrayFormat: 'none'}, opts);
+
+	var formatter = parserForArrayFormat(opts);
+
+	// Create an object with no prototype
+	// https://github.com/sindresorhus/query-string/issues/47
+	var ret = Object.create(null);
+
+	if (typeof str !== 'string') {
+		return ret;
+	}
+
+	str = str.trim().replace(/^(\?|#|&)/, '');
+
+	if (!str) {
+		return ret;
+	}
+
+	str.split('&').forEach(function (param) {
+		var parts = param.replace(/\+/g, ' ').split('=');
+		// Firefox (pre 40) decodes `%3D` to `=`
+		// https://github.com/sindresorhus/query-string/pull/37
+		var key = parts.shift();
+		var val = parts.length > 0 ? parts.join('=') : undefined;
+
+		// missing `=` should be `null`:
+		// http://w3.org/TR/2012/WD-url-20120524/#collect-url-parameters
+		val = val === undefined ? null : decodeURIComponent(val);
+
+		formatter(decodeURIComponent(key), val, ret);
+	});
+
+	return Object.keys(ret).sort().reduce(function (result, key) {
+		var val = ret[key];
+		if (Boolean(val) && typeof val === 'object' && !Array.isArray(val)) {
+			// Sort object keys, not values
+			result[key] = keysSorter(val);
+		} else {
+			result[key] = val;
+		}
+
+		return result;
+	}, Object.create(null));
+};
+
+exports.stringify = function (obj, opts) {
+	var defaults = {
+		encode: true,
+		strict: true,
+		arrayFormat: 'none'
+	};
+
+	opts = objectAssign(defaults, opts);
+
+	var formatter = encoderForArrayFormat(opts);
+
+	return obj ? Object.keys(obj).sort().map(function (key) {
+		var val = obj[key];
+
+		if (val === undefined) {
+			return '';
+		}
+
+		if (val === null) {
+			return encode(key, opts);
+		}
+
+		if (Array.isArray(val)) {
+			var result = [];
+
+			val.slice().forEach(function (val2) {
+				if (val2 === undefined) {
+					return;
+				}
+
+				result.push(formatter(key, val2, result.length));
+			});
+
+			return result.join('&');
+		}
+
+		return encode(key, opts) + '=' + encode(val, opts);
+	}).filter(function (x) {
+		return x.length > 0;
+	}).join('&') : '';
+};
 
 
 /***/ }),
@@ -30342,6 +30559,25 @@ function resolvePathname(to) {
 
 /***/ }),
 
+/***/ "./node_modules/strict-uri-encode/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/strict-uri-encode/index.js ***!
+  \*************************************************/
+/*! dynamic exports provided */
+/*! all exports used */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+module.exports = function (str) {
+	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
+		return '%' + c.charCodeAt(0).toString(16).toUpperCase();
+	});
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/string-convert/camel2hyphen.js":
 /*!*****************************************************!*\
   !*** ./node_modules/string-convert/camel2hyphen.js ***!
@@ -31520,9 +31756,9 @@ if(true) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__logo_svg__ = __webpack_require__(/*! ./logo.svg */ "./src/logo.svg");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__logo_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__logo_svg__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__NavBar_NavBar__ = __webpack_require__(/*! ./NavBar/NavBar */ "./src/NavBar/NavBar.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Footer_Footer__ = __webpack_require__(/*! ./Footer/Footer */ "./src/Footer/Footer.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Carousel_Carousel__ = __webpack_require__(/*! ./Carousel/Carousel */ "./src/Carousel/Carousel.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Components_NavBar_NavBar__ = __webpack_require__(/*! ./Components/NavBar/NavBar */ "./src/Components/NavBar/NavBar.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Components_Footer_Footer__ = __webpack_require__(/*! ./Components/Footer/Footer */ "./src/Components/Footer/Footer.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Components_Carousel_Carousel__ = __webpack_require__(/*! ./Components/Carousel/Carousel */ "./src/Components/Carousel/Carousel.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__App_css__ = __webpack_require__(/*! ./App.css */ "./src/App.css");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__App_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__App_css__);
 var _jsxFileName = 'C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\App.js';
@@ -31575,20 +31811,45 @@ var App = function (_Component) {
             },
             __self: this
           },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'header',
+            { className: 'App-header', __source: {
+                fileName: _jsxFileName,
+                lineNumber: 21
+              },
+              __self: this
+            },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: __WEBPACK_IMPORTED_MODULE_1__logo_svg___default.a, className: 'App-logo', alt: 'logo', __source: {
+                fileName: _jsxFileName,
+                lineNumber: 22
+              },
+              __self: this
+            }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'h1',
+              { className: 'App-title', __source: {
+                  fileName: _jsxFileName,
+                  lineNumber: 23
+                },
+                __self: this
+              },
+              'Welcome to React'
+            )
+          ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('p', { className: 'App-intro', __source: {
               fileName: _jsxFileName,
               lineNumber: 25
             },
             __self: this
           }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Carousel_Carousel__["a" /* default */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Components_Carousel_Carousel__["a" /* default */], {
             __source: {
               fileName: _jsxFileName,
               lineNumber: 28
             },
             __self: this
           }),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Footer_Footer__["a" /* default */], {
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Components_Footer_Footer__["a" /* default */], {
             __source: {
               fileName: _jsxFileName,
               lineNumber: 29
@@ -31607,10 +31868,10 @@ var App = function (_Component) {
 
 /***/ }),
 
-/***/ "./src/Carousel/Carousel.js":
-/*!**********************************!*\
-  !*** ./src/Carousel/Carousel.js ***!
-  \**********************************/
+/***/ "./src/Components/Carousel/Carousel.js":
+/*!*********************************************!*\
+  !*** ./src/Components/Carousel/Carousel.js ***!
+  \*********************************************/
 /*! exports provided: default */
 /*! exports used: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -31620,8 +31881,7 @@ var App = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_slick__ = __webpack_require__(/*! react-slick */ "./node_modules/react-slick/lib/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_slick___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_slick__);
-throw new Error("Cannot find module \"./Footer/Footer\"");
-var _jsxFileName = 'C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\Carousel\\Carousel.js';
+var _jsxFileName = "C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\Components\\Carousel\\Carousel.js";
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -31630,7 +31890,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 
 
 
@@ -31645,7 +31904,7 @@ var Carousel = function (_React$Component) {
     }
 
     _createClass(Carousel, [{
-        key: 'render',
+        key: "render",
         value: function render() {
             var settings = {
                 dots: true,
@@ -31653,7 +31912,7 @@ var Carousel = function (_React$Component) {
                 slidesToShow: 3,
                 slidesToScroll: 1,
                 autoplay: true,
-                autoplaySpeed: 5000,
+                autoplaySpeed: 2000,
                 pauseOnHover: false,
                 centerMode: true,
                 centerPadding: "0"
@@ -31661,8 +31920,8 @@ var Carousel = function (_React$Component) {
             };
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                'div',
-                { className: 'container sizing', __source: {
+                "div",
+                { className: "container sizing", __source: {
                         fileName: _jsxFileName,
                         lineNumber: 21
                     },
@@ -31678,7 +31937,7 @@ var Carousel = function (_React$Component) {
                         __self: this
                     }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         {
                             __source: {
                                 fileName: _jsxFileName,
@@ -31686,7 +31945,7 @@ var Carousel = function (_React$Component) {
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://static.vibe.com/files/2018/01/black-panther-poster-1517325222-640x933.jpg', alt: 'poster', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "https://static.vibe.com/files/2018/01/black-panther-poster-1517325222-640x933.jpg", alt: "poster", __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 24
                             },
@@ -31694,7 +31953,7 @@ var Carousel = function (_React$Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         {
                             __source: {
                                 fileName: _jsxFileName,
@@ -31702,7 +31961,7 @@ var Carousel = function (_React$Component) {
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://fanart.tv/fanart/movies/293660/movieposter/deadpool-56948e5115048.jpg', alt: 'poster', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "https://fanart.tv/fanart/movies/293660/movieposter/deadpool-56948e5115048.jpg", alt: "poster", __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 27
                             },
@@ -31710,7 +31969,7 @@ var Carousel = function (_React$Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         {
                             __source: {
                                 fileName: _jsxFileName,
@@ -31718,7 +31977,7 @@ var Carousel = function (_React$Component) {
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://orig00.deviantart.net/4d95/f/2011/007/b/2/child__s_play_movie_cover_3_by_designerdude0326-d36mlvh.jpg', alt: 'poster', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "https://orig00.deviantart.net/4d95/f/2011/007/b/2/child__s_play_movie_cover_3_by_designerdude0326-d36mlvh.jpg", alt: "poster", __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 30
                             },
@@ -31726,7 +31985,7 @@ var Carousel = function (_React$Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         {
                             __source: {
                                 fileName: _jsxFileName,
@@ -31734,7 +31993,7 @@ var Carousel = function (_React$Component) {
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'http://img.auctiva.com/imgdata/1/1/7/9/1/0/1/webimg/560106212_o.jpg', alt: 'poster', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "http://img.auctiva.com/imgdata/1/1/7/9/1/0/1/webimg/560106212_o.jpg", alt: "poster", __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 33
                             },
@@ -31742,7 +32001,7 @@ var Carousel = function (_React$Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         {
                             __source: {
                                 fileName: _jsxFileName,
@@ -31750,7 +32009,7 @@ var Carousel = function (_React$Component) {
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://monsterzeronj.files.wordpress.com/2013/08/h13w.jpg', alt: 'poster', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "https://monsterzeronj.files.wordpress.com/2013/08/h13w.jpg", alt: "poster", __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 36
                             },
@@ -31758,7 +32017,7 @@ var Carousel = function (_React$Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         {
                             __source: {
                                 fileName: _jsxFileName,
@@ -31766,7 +32025,7 @@ var Carousel = function (_React$Component) {
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'http://img.moviepostershop.com/juice-movie-poster-1992-1020195456.jpg', alt: 'poster', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "http://img.moviepostershop.com/juice-movie-poster-1992-1020195456.jpg", alt: "poster", __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 39
                             },
@@ -31774,7 +32033,7 @@ var Carousel = function (_React$Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         {
                             __source: {
                                 fileName: _jsxFileName,
@@ -31782,7 +32041,7 @@ var Carousel = function (_React$Component) {
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://jbchost.com.br/akibaspace/media/2017/02/promologan.jpg', alt: 'poster', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "https://jbchost.com.br/akibaspace/media/2017/02/promologan.jpg", alt: "poster", __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 42
                             },
@@ -31790,7 +32049,7 @@ var Carousel = function (_React$Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         {
                             __source: {
                                 fileName: _jsxFileName,
@@ -31798,7 +32057,7 @@ var Carousel = function (_React$Component) {
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'http://digitalspyuk.cdnds.net/17/12/480x681/john-wick-chapter-2-poster.jpg', alt: 'poster', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "http://digitalspyuk.cdnds.net/17/12/480x681/john-wick-chapter-2-poster.jpg", alt: "poster", __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 45
                             },
@@ -31806,7 +32065,7 @@ var Carousel = function (_React$Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         {
                             __source: {
                                 fileName: _jsxFileName,
@@ -31814,7 +32073,7 @@ var Carousel = function (_React$Component) {
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'https://www.dvdsreleasedates.com/posters/800/T/The-Avengers-2012-movie-poster.jpg', alt: 'poster', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "https://www.dvdsreleasedates.com/posters/800/T/The-Avengers-2012-movie-poster.jpg", alt: "poster", __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 48
                             },
@@ -31822,7 +32081,7 @@ var Carousel = function (_React$Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         {
                             __source: {
                                 fileName: _jsxFileName,
@@ -31830,7 +32089,7 @@ var Carousel = function (_React$Component) {
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'http://media.comicbook.com/2017/10/guardians-of-the-galaxy-movie-poster-marvel-cinematic-universe-1038897.jpg', alt: 'poster', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "http://media.comicbook.com/2017/10/guardians-of-the-galaxy-movie-poster-marvel-cinematic-universe-1038897.jpg", alt: "poster", __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 51
                             },
@@ -31838,7 +32097,7 @@ var Carousel = function (_React$Component) {
                         })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
+                        "div",
                         {
                             __source: {
                                 fileName: _jsxFileName,
@@ -31846,21 +32105,14 @@ var Carousel = function (_React$Component) {
                             },
                             __self: this
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'http://www.fatmovieguy.com/wp-content/uploads/2015/04/Batman-V-Superman-Dawn-of-Justice-Movie-Poster.jpg', alt: 'poster', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "http://www.fatmovieguy.com/wp-content/uploads/2015/04/Batman-V-Superman-Dawn-of-Justice-Movie-Poster.jpg", alt: "poster", __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 54
                             },
                             __self: this
                         })
                     )
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Footer_Footer___default.a, {
-                    __source: {
-                        fileName: _jsxFileName,
-                        lineNumber: 58
-                    },
-                    __self: this
-                })
+                )
             );
         }
     }]);
@@ -31872,10 +32124,10 @@ var Carousel = function (_React$Component) {
 
 /***/ }),
 
-/***/ "./src/Footer/Footer.js":
-/*!******************************!*\
-  !*** ./src/Footer/Footer.js ***!
-  \******************************/
+/***/ "./src/Components/Footer/Footer.js":
+/*!*****************************************!*\
+  !*** ./src/Components/Footer/Footer.js ***!
+  \*****************************************/
 /*! exports provided: default */
 /*! exports used: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -31883,7 +32135,7 @@ var Carousel = function (_React$Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-var _jsxFileName = "C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\Footer\\Footer.js";
+var _jsxFileName = "C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\Components\\Footer\\Footer.js";
 
 
 function Footer(props) {
@@ -32112,10 +32364,10 @@ function Footer(props) {
 
 /***/ }),
 
-/***/ "./src/NavBar/NavBar.js":
-/*!******************************!*\
-  !*** ./src/NavBar/NavBar.js ***!
-  \******************************/
+/***/ "./src/Components/NavBar/NavBar.js":
+/*!*****************************************!*\
+  !*** ./src/Components/NavBar/NavBar.js ***!
+  \*****************************************/
 /*! exports provided: default */
 /*! exports used: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -32124,7 +32376,7 @@ function Footer(props) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-var _jsxFileName = 'C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\NavBar\\NavBar.js';
+var _jsxFileName = 'C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\Components\\NavBar\\NavBar.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -32202,7 +32454,7 @@ var NavBar = function (_React$Component) {
                             __self: this
                         },
                         'MoviePosterArena',
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-grav dia', __source: {
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'fa fa-optin-monster monster', __source: {
                                 fileName: _jsxFileName,
                                 lineNumber: 15
                             },
@@ -32339,35 +32591,6 @@ var NavBar = function (_React$Component) {
                                     'li',
                                     { className: 'nav-item', __source: {
                                             fileName: _jsxFileName,
-                                            lineNumber: 33
-                                        },
-                                        __self: this
-                                    },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        'a',
-                                        { className: 'nav-link', href: '#', __source: {
-                                                fileName: _jsxFileName,
-                                                lineNumber: 34
-                                            },
-                                            __self: this
-                                        },
-                                        'NewArrivals ',
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            'span',
-                                            { className: 'sr-only', __source: {
-                                                    fileName: _jsxFileName,
-                                                    lineNumber: 34
-                                                },
-                                                __self: this
-                                            },
-                                            '(current)'
-                                        )
-                                    )
-                                ),
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'li',
-                                    { className: 'nav-item', __source: {
-                                            fileName: _jsxFileName,
                                             lineNumber: 36
                                         },
                                         __self: this
@@ -32380,7 +32603,7 @@ var NavBar = function (_React$Component) {
                                             },
                                             __self: this
                                         },
-                                        'Disney ',
+                                        'Login ',
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'span',
                                             { className: 'sr-only', __source: {
@@ -32467,7 +32690,7 @@ var NavBar = function (_React$Component) {
                                         }),
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'a',
-                                            { className: 'dropdown-item', href: '#', __source: {
+                                            { className: 'dropdown-item', href: '/AddPoster', __source: {
                                                     fileName: _jsxFileName,
                                                     lineNumber: 49
                                                 },
@@ -32479,28 +32702,37 @@ var NavBar = function (_React$Component) {
                                 )
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'form',
-                                { className: 'form-inline my-2 my-lg-0', __source: {
+                                'div',
+                                { className: 'container', __source: {
                                         fileName: _jsxFileName,
                                         lineNumber: 53
                                     },
                                     __self: this
                                 },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'form-control mr-sm-2', type: 'search', placeholder: 'Search', 'aria-label': 'Search', __source: {
-                                        fileName: _jsxFileName,
-                                        lineNumber: 54
-                                    },
-                                    __self: this
-                                }),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    'button',
-                                    { className: 'btn btn-outline-primary my-2 my-sm-0', type: 'submit', __source: {
+                                    'form',
+                                    { className: 'form-inline my-2 my-lg-0 c', __source: {
+                                            fileName: _jsxFileName,
+                                            lineNumber: 54
+                                        },
+                                        __self: this
+                                    },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'form-control mr-sm-2', type: 'search', placeholder: 'Search', 'aria-label': 'Search', __source: {
                                             fileName: _jsxFileName,
                                             lineNumber: 55
                                         },
                                         __self: this
-                                    },
-                                    'Search'
+                                    }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'button',
+                                        { className: 'btn btn-outline-primary my-2 my-sm-0', type: 'submit', __source: {
+                                                fileName: _jsxFileName,
+                                                lineNumber: 56
+                                            },
+                                            __self: this
+                                        },
+                                        'Search'
+                                    )
                                 )
                             )
                         )
@@ -32509,7 +32741,14 @@ var NavBar = function (_React$Component) {
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', {
                     __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 60
+                        lineNumber: 65
+                    },
+                    __self: this
+                }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('hr', {
+                    __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 67
                     },
                     __self: this
                 })
@@ -32524,10 +32763,372 @@ var NavBar = function (_React$Component) {
 
 /***/ }),
 
-/***/ "./src/Posters/Posters.js":
-/*!********************************!*\
-  !*** ./src/Posters/Posters.js ***!
-  \********************************/
+/***/ "./src/Views/DetailPage.js":
+/*!*********************************!*\
+  !*** ./src/Views/DetailPage.js ***!
+  \*********************************/
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+var _jsxFileName = 'C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\Views\\DetailPage.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var DetailPage = function (_React$Component) {
+    _inherits(DetailPage, _React$Component);
+
+    function DetailPage(props) {
+        _classCallCheck(this, DetailPage);
+
+        var _this = _possibleConstructorReturn(this, (DetailPage.__proto__ || Object.getPrototypeOf(DetailPage)).call(this, props));
+
+        _this.state = {};
+        return _this;
+    }
+
+    _createClass(DetailPage, [{
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                {
+                    __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 13
+                    },
+                    __self: this
+                },
+                'hello world'
+            );
+        }
+    }]);
+
+    return DetailPage;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (DetailPage);
+
+/***/ }),
+
+/***/ "./src/Views/Post.js":
+/*!***************************!*\
+  !*** ./src/Views/Post.js ***!
+  \***************************/
+/*! exports provided: default */
+/*! exports used: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+var _jsxFileName = 'C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\Views\\Post.js';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var Post = function (_React$Component) {
+    _inherits(Post, _React$Component);
+
+    function Post(props) {
+        _classCallCheck(this, Post);
+
+        var _this = _possibleConstructorReturn(this, (Post.__proto__ || Object.getPrototypeOf(Post)).call(this, props));
+
+        _this.handleInputChange = function (ev) {
+            var addMovies = Object.assign({}, _this.state.addMovies);
+            addMovies[ev.target.name] = ev.target.value;
+            _this.setState({ addMovies: addMovies });
+        };
+
+        _this.handleSubmit = function (e) {
+            e.preventDefault();
+            var add = _this.state.addMovies;
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post("http://localhost:65332/api/poster", add).then(function (resp) {
+                _this.setState({
+                    add: {}
+                });
+                console.log(resp);
+            }, function (err) {
+                return console.log(err);
+            });
+        };
+
+        _this.state = {
+            addMovies: {
+                title: '',
+                description: '',
+                type: '',
+                price: '',
+                imageUrl: '',
+                modifiedBy: ''
+            }
+        };
+        return _this;
+    }
+
+    _createClass(Post, [{
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'container col-md-6', __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 40
+                    },
+                    __self: this
+                },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'form',
+                    {
+                        __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 41
+                        },
+                        __self: this
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group', __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 42
+                            },
+                            __self: this
+                        },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            {
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 43
+                                },
+                                __self: this
+                            },
+                            'Title'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'form-control',
+                            type: 'text',
+                            name: 'title',
+                            placeholder: 'Title',
+                            value: this.title,
+                            onChange: this.handleInputChange,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 44
+                            },
+                            __self: this
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group', __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 52
+                            },
+                            __self: this
+                        },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            {
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 53
+                                },
+                                __self: this
+                            },
+                            'Description'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'form-control',
+                            type: 'text',
+                            name: 'description',
+                            placeholder: 'Description',
+                            value: this.description,
+                            onChange: this.handleInputChange,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 54
+                            },
+                            __self: this
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group', __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 62
+                            },
+                            __self: this
+                        },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            {
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 63
+                                },
+                                __self: this
+                            },
+                            'Type'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'form-control',
+                            type: 'text',
+                            name: 'type',
+                            placeholder: 'Type',
+                            value: this.type,
+                            onChange: this.handleInputChange,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 64
+                            },
+                            __self: this
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group', __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 72
+                            },
+                            __self: this
+                        },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            {
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 73
+                                },
+                                __self: this
+                            },
+                            'Price'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'form-control',
+                            type: 'text',
+                            name: 'price',
+                            placeholder: 'Price',
+                            value: this.price,
+                            onChange: this.handleInputChange,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 74
+                            },
+                            __self: this
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group', __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 82
+                            },
+                            __self: this
+                        },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            {
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 83
+                                },
+                                __self: this
+                            },
+                            'ImageUrl'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'form-control',
+                            type: 'text',
+                            name: 'imageUrl',
+                            placeholder: 'ImageUrl',
+                            value: this.imageUrl,
+                            onChange: this.handleInputChange,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 84
+                            },
+                            __self: this
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'form-group', __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 92
+                            },
+                            __self: this
+                        },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            {
+                                __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 93
+                                },
+                                __self: this
+                            },
+                            'ModifiedBy'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { className: 'form-control',
+                            type: 'text',
+                            name: 'modifiedBy',
+                            placeholder: 'Mod by',
+                            value: this.modifiedBy,
+                            onChange: this.handleInputChange,
+                            __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 94
+                            },
+                            __self: this
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'button',
+                        { className: 'btn btn-primary', onClick: this.handleSubmit, __source: {
+                                fileName: _jsxFileName,
+                                lineNumber: 102
+                            },
+                            __self: this
+                        },
+                        'Submit'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Post;
+}(__WEBPACK_IMPORTED_MODULE_0_react___default.a.Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (Post);
+
+/***/ }),
+
+/***/ "./src/Views/Posters.js":
+/*!******************************!*\
+  !*** ./src/Views/Posters.js ***!
+  \******************************/
 /*! exports provided: default */
 /*! exports used: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -32538,7 +33139,10 @@ var NavBar = function (_React$Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
-var _jsxFileName = 'C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\Posters\\Posters.js';
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Components_Footer_Footer__ = __webpack_require__(/*! ../Components/Footer/Footer */ "./src/Components/Footer/Footer.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_query_string__ = __webpack_require__(/*! query-string */ "./node_modules/query-string/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_query_string___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_query_string__);
+var _jsxFileName = 'C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\Views\\Posters.js';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -32547,6 +33151,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
 
 
 
@@ -32574,92 +33182,166 @@ var Posters = function (_React$Component) {
         };
 
         _this.state = {
-            movies: []
+            movies: [],
+            addMovies: {
+                title: '',
+                description: '',
+                type: '',
+                price: '',
+                imageUrl: '',
+                id: ''
+
+            }
         };
+
         return _this;
     }
 
     _createClass(Posters, [{
+        key: 'handleItem',
+        value: function handleItem(id) {
+            debugger;
+            var urlParams = new URLSearchParams(location.search);
+
+            console.log('btn');
+            // window.location.href = "http://localhost:65332/Posters/?id=" + id;
+        }
+
+        // selectedItem = (id) => {
+        //     debugger;
+        //     this.setState({
+        //         id: id
+        //     });
+        //     axios.get("http://localhost.65332/api/poster/" + id)
+        //     .then(resp => {
+        //         let arr = resp.data.item;
+        //         let id = resp.data.item.id;
+        //         this.setState({
+        //             movieObj:{
+        //             id: resp.data.item.id,
+        //             title: resp.data.item.title,
+        //             description: resp.data.item.description,
+        //             type: resp.data.item.type,
+        //             imageUrl: resp.data.item.imageUrl
+        //             }
+        //         });
+        //       console.log(id, data);
+        //     });
+        // }
+
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                {
-                    __source: {
+                { className: 'container', __source: {
                         fileName: _jsxFileName,
-                        lineNumber: 31
+                        lineNumber: 75
                     },
                     __self: this
                 },
-                this.state.movies.map(function (movie) {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { key: movie.id, __source: {
-                                fileName: _jsxFileName,
-                                lineNumber: 34
-                            },
-                            __self: _this2
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'container more', __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 76
                         },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'p',
-                            {
-                                __source: {
-                                    fileName: _jsxFileName,
-                                    lineNumber: 35
-                                },
-                                __self: _this2
-                            },
-                            movie.title
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'p',
-                            {
-                                __source: {
-                                    fileName: _jsxFileName,
-                                    lineNumber: 36
-                                },
-                                __self: _this2
-                            },
-                            movie.description
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'p',
-                            {
-                                __source: {
-                                    fileName: _jsxFileName,
-                                    lineNumber: 37
-                                },
-                                __self: _this2
-                            },
-                            movie.type
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'p',
-                            {
-                                __source: {
-                                    fileName: _jsxFileName,
-                                    lineNumber: 38
-                                },
-                                __self: _this2
-                            },
-                            movie.price
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: movie.imageUrl, __source: {
+                        __self: this
+                    },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'h2',
+                        { className: 'movietitlefont', __source: {
                                 fileName: _jsxFileName,
-                                lineNumber: 39
+                                lineNumber: 77
                             },
-                            __self: _this2
-                        }),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('div', {
-                            __source: {
-                                fileName: _jsxFileName,
-                                lineNumber: 40
+                            __self: this
+                        },
+                        'MoviePosters'
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'row', __source: {
+                            fileName: _jsxFileName,
+                            lineNumber: 79
+                        },
+                        __self: this
+                    },
+                    this.state.movies.map(function (movie) {
+                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: ' row col-4', key: movie.id, __source: {
+                                    fileName: _jsxFileName,
+                                    lineNumber: 81
+                                },
+                                __self: _this2
                             },
-                            __self: _this2
-                        })
-                    );
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'div',
+                                { className: 'container box', __source: {
+                                        fileName: _jsxFileName,
+                                        lineNumber: 82
+                                    },
+                                    __self: _this2
+                                },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'a',
+                                    {
+                                        __source: {
+                                            fileName: _jsxFileName,
+                                            lineNumber: 83
+                                        },
+                                        __self: _this2
+                                    },
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { href: '/DetailPage', className: 'row ibox md-3 movies', src: movie.imageUrl, onClick: _this2.handleItem.bind(_this2, movie.id), __source: {
+                                            fileName: _jsxFileName,
+                                            lineNumber: 83
+                                        },
+                                        __self: _this2
+                                    })
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'title', __source: {
+                                            fileName: _jsxFileName,
+                                            lineNumber: 84
+                                        },
+                                        __self: _this2
+                                    },
+                                    movie.title
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'description', __source: {
+                                            fileName: _jsxFileName,
+                                            lineNumber: 85
+                                        },
+                                        __self: _this2
+                                    },
+                                    movie.description
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'div',
+                                    { className: 'price', __source: {
+                                            fileName: _jsxFileName,
+                                            lineNumber: 86
+                                        },
+                                        __self: _this2
+                                    },
+                                    movie.price
+                                )
+                            )
+                        );
+                    })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Components_Footer_Footer__["a" /* default */], {
+                    __source: {
+                        fileName: _jsxFileName,
+                        lineNumber: 91
+                    },
+                    __self: this
                 })
             );
         }
@@ -32749,6 +33431,7 @@ Object(__WEBPACK_IMPORTED_MODULE_4__registerServiceWorker__["a" /* default */])(
   !*** ./src/logo.svg ***!
   \**********************/
 /*! dynamic exports provided */
+/*! exports used: default */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "static/media/logo.8e0f8010.svg";
@@ -32881,13 +33564,17 @@ function unregister() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__NavBar_NavBar__ = __webpack_require__(/*! ./NavBar/NavBar */ "./src/NavBar/NavBar.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Carousel_Carousel__ = __webpack_require__(/*! ./Carousel/Carousel */ "./src/Carousel/Carousel.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Footer_Footer__ = __webpack_require__(/*! ./Footer/Footer */ "./src/Footer/Footer.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Posters_Posters__ = __webpack_require__(/*! ./Posters/Posters */ "./src/Posters/Posters.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__App__ = __webpack_require__(/*! ./App */ "./src/App.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Components_NavBar_NavBar__ = __webpack_require__(/*! ./Components/NavBar/NavBar */ "./src/Components/NavBar/NavBar.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Components_Carousel_Carousel__ = __webpack_require__(/*! ./Components/Carousel/Carousel */ "./src/Components/Carousel/Carousel.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Components_Footer_Footer__ = __webpack_require__(/*! ./Components/Footer/Footer */ "./src/Components/Footer/Footer.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Views_Post__ = __webpack_require__(/*! ./Views/Post */ "./src/Views/Post.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Views_Posters__ = __webpack_require__(/*! ./Views/Posters */ "./src/Views/Posters.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__Views_DetailPage__ = __webpack_require__(/*! ./Views/DetailPage */ "./src/Views/DetailPage.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__App__ = __webpack_require__(/*! ./App */ "./src/App.js");
 var _jsxFileName = 'C:\\StarterProject\\MoviePosterArena\\StarterProject\\MovieArtArena.Web\\app\\public\\src\\routes.js',
     _this = this;
+
+
 
 
 
@@ -32916,22 +33603,34 @@ var Routes = function Routes() {
                 },
                 __self: _this
             },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__NavBar_NavBar__["a" /* default */], {
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Components_NavBar_NavBar__["a" /* default */], {
                 __source: {
                     fileName: _jsxFileName,
                     lineNumber: 14
                 },
                 __self: _this
             }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { exact: true, path: '/', component: __WEBPACK_IMPORTED_MODULE_6__App__["a" /* default */], __source: {
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { exact: true, path: '/', component: __WEBPACK_IMPORTED_MODULE_8__App__["a" /* default */], __source: {
                     fileName: _jsxFileName,
                     lineNumber: 15
                 },
                 __self: _this
             }),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/Posters', component: __WEBPACK_IMPORTED_MODULE_5__Posters_Posters__["a" /* default */], __source: {
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/Posters', component: __WEBPACK_IMPORTED_MODULE_6__Views_Posters__["a" /* default */], __source: {
                     fileName: _jsxFileName,
                     lineNumber: 16
+                },
+                __self: _this
+            }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/AddPoster', component: __WEBPACK_IMPORTED_MODULE_5__Views_Post__["a" /* default */], __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 17
+                },
+                __self: _this
+            }),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], { path: '/:idDetailPage', component: __WEBPACK_IMPORTED_MODULE_7__Views_DetailPage__["a" /* default */], __source: {
+                    fileName: _jsxFileName,
+                    lineNumber: 18
                 },
                 __self: _this
             })

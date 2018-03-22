@@ -42,6 +42,30 @@ namespace MoviePosterArena.Services
             return result;
         }
 
+        public void Update(PosterUpdateRequest model)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string cmdText = "Poster_Update";
+                using (SqlCommand cmd = new SqlCommand(cmdText, conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;       
+                    cmd.Parameters.AddWithValue("@Id", model.Id);
+                    cmd.Parameters.AddWithValue("@Title", model.Title);
+                    cmd.Parameters.AddWithValue("@Description", model.Description);
+                    cmd.Parameters.AddWithValue("@Type", model.Type);
+                    cmd.Parameters.AddWithValue("@Price", model.Price);
+                    cmd.Parameters.AddWithValue("@ImageUrl", model.ImageUrl);
+                    cmd.Parameters.AddWithValue("@ModifiedBy", model.ModifiedBy);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+
+                    conn.Close();
+                }
+            }
+        }
+
         public List<Poster> GetAll()
         {
             List<Poster> result = new List<Poster>();
@@ -74,6 +98,57 @@ namespace MoviePosterArena.Services
             }
 
             return result;
+        }
+
+        public List<Poster> GetById(int id)
+        {
+            List<Poster>result = new List<Poster>();
+            using(SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string cmdText = "Poster_SelectById";
+                using(SqlCommand cmd = new SqlCommand(cmdText, conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    conn.Open();
+                    SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
+                    while (reader.Read())
+                    {
+                        Poster model = new Poster();
+                        int index = 0;
+                        model.Id = reader.GetInt32(index++);
+                        model.Title = reader.GetString(index++);
+                        model.Description = reader.GetString(index++);
+                        model.Type = reader.GetString(index++);
+                        model.Price = reader.GetDecimal(index++);
+                        model.ImageUrl = reader.GetString(index++);
+                        model.CreatedDate = reader.GetDateTime(index++);
+                        model.ModifiedDate = reader.GetDateTime(index++);
+                        model.ModifiedBy = reader.GetString(index++);
+                        result.Add(model);
+                    }
+                    conn.Close();
+                }
+            }
+            return result;
+        }
+
+        public void Delete(int id)
+        {
+            List<Poster> result = new List<Poster>();
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string cmdText = "Poster_Delete";
+                using (SqlCommand cmd = new SqlCommand(cmdText, conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    
+                }
+            }
         }
     }
 }

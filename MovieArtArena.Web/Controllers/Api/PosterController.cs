@@ -31,10 +31,21 @@ namespace MovieArtArena.Web.Controllers.Api
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
             }
         }
-        [Route("getbyid")]
-        public HttpResponseMessage GetById()
+
+        [Route("{id:int}")]
+        public HttpResponseMessage GetById(int id)
         {
-            return Request.CreateResponse(HttpStatusCode.OK, "called get by id");
+            try
+            {
+                PosterService svc = new PosterService();
+                ItemListResponse<Poster> response = new ItemListResponse<Poster>();
+                response.Items = svc.GetById(id);
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
         }
 
         // GET api/<controller>/5
@@ -67,14 +78,44 @@ namespace MovieArtArena.Web.Controllers.Api
             }
         }
 
-        // PUT api/<controller>/5
-        public void Put(int id, [FromBody]string value)
+        [Route("{id:int}")]
+        public HttpResponseMessage Put(int id, PosterUpdateRequest model)
         {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    PosterService svc = new PosterService();
+                    SuccessResponse response = new SuccessResponse ();
+                    svc.Update(model);
+                    return Request.CreateResponse(HttpStatusCode.OK, response);
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        [Route("{id:int}")]
+        public HttpResponseMessage Delete(int id)
         {
+            try
+            {
+                PosterService svc = new PosterService();
+                SuccessResponse response = new SuccessResponse();
+                svc.Delete(id);
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex.Message);
+            }
         }
     }
 }

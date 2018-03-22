@@ -11,7 +11,7 @@ background-color: rgba(0, 0, 0, 0.966);
 
 .sptext{
   font-family: cursive;
-  color: rgb(122, 252, 252);
+  color: rgb(255, 255, 255);
 }
 
 .txtAll{
@@ -35,7 +35,7 @@ background-color: rgba(0, 0, 0, 0.966);
   bottom: 0;
   width: 100%;
   background-color: rgb(15, 12, 12);
-  color: white;
+  color: rgb(129, 122, 122);
   text-align: center;
 }
 
@@ -62,4 +62,51 @@ align-items: center;
 
 .navstyle {
  font-family: inherit;
+}
+
+.movies{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  width: 400px;
+  height: 450px;
+  padding-right: 90px;
+
+}
+
+.movietitlefont{
+  font-family: 'Shadows Into Light', cursive;
+  font-size: 50px;
+  text-decoration: underline;
+}
+
+.more{
+  margin-bottom: 50px;
+}
+
+.title {
+  font-weight: 900;
+
+}
+
+.description {
+  font-style: italic;
+  color: dimgray;
+}
+
+.price {
+  font-style: italic;
+  color: dimgray;
+}
+
+.box {
+  margin-bottom: 78px;
+  margin-right: 10px;
+  margin-left: 100px;
+}
+
+.cart{
+  font-size: 30px;
+}
+
+.monster{
+  color: rgb(0, 0, 0);
 }
